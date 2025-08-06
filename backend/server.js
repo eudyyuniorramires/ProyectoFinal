@@ -1,13 +1,11 @@
 const express = require('express');
 const cors = require('cors');
-const dotenv = require('dotenv');
 const conectarDB = require('./config/db');
 const articulosRoutes = require('./routes/articuloRoutes')
 
 
 
 require('dotenv').config();
-console.log('DEBUG DB_URI:', process.env.DB_URI);
 
 conectarDB();
 

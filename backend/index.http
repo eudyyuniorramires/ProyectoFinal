@@ -1,0 +1,40 @@
+### Obtener todos los artículos
+GET http://localhost:5000/api/articulos
+Accept: application/json
+
+###
+
+### Crear un artículo nuevo
+POST http://localhost:5000/api/articulos
+Content-Type: application/json
+
+{
+  "codigo": "A002",
+  "nombre": "Teclado mecánico",
+  "foto": "https://ejemplo.com/teclado.jpg",
+  "descripcion": "Teclado mecánico RGB retroiluminado",
+  "cantidad": 10,
+  "precio": 55.99
+}
+
+###
+
+### Obtener artículo por ID (reemplaza el ID)
+GET http://localhost:5000/api/articulos/60f8a1f1a6e123456789abcd
+Accept: application/json
+
+###
+
+### Actualizar artículo por ID (reemplaza el ID)
+PUT http://localhost:5000/api/articulos/6892a1fff22b97a17fe3fe68
+Content-Type: application/json
+
+{
+  "cantidad": 15,
+  "precio": 60.00
+}
+
+###
+
+### Eliminar artículo por ID (reemplaza el ID)
+DELETE http://localhost:5000/api/articulos/60f8a1f1a6e123456789abcd
