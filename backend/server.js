@@ -20,6 +20,10 @@ app.use('/api/articulos',articulosRoutes);
 
 const PORT = process.env.PORT || 5000;
 
+app.get('/', (req, res) => {
+    res.send('API de artículos funcionando');
+});
+
 app.listen(PORT,() =>{
     console.log(`El servidor esta escuchando en el puerto ${PORT}`); 
 });

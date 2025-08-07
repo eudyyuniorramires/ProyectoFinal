@@ -1,3 +1,6 @@
+
+//Aqui se ocnfigura la base de datos tener en cuenta modificar env. con el nombre de la DB que creaste 
+
 const mongoose  =  require('mongoose');
 
 
@@ -12,6 +15,7 @@ const conectarDB  = async() => {
         process.exit(1);
     }
 
+    
 
 };
 
