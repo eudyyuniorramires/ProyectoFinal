@@ -1,9 +1,17 @@
-const Articulo = require('../models/Articulo');
+const Articulo = require("../models/Articulo");
 
 // Crear nuevo artículo
 const crearArticulo = async (req, res) => {
   try {
-    const nuevoArticulo = new Articulo(req.body);
+    const nuevoArticulo = new Articulo({
+      codigo: req.body.codigo,
+      nombre: req.body.nombre,
+      descripcion: req.body.descripcion,
+      cantidad: req.body.cantidad,
+      precio: req.body.precio,
+      foto: req.file ? `/uploads/${req.file.filename}` : null,
+    });
+
     await nuevoArticulo.save();
     res.status(201).json(nuevoArticulo);
   } catch (error) {
@@ -11,7 +19,7 @@ const crearArticulo = async (req, res) => {
   }
 };
 
-// Obtener todos los artículos
+// Obtener todos
 const obtenerArticulos = async (req, res) => {
   try {
     const articulos = await Articulo.find();
@@ -21,40 +29,53 @@ const obtenerArticulos = async (req, res) => {
   }
 };
 
-// Obtener artículo por ID
+// Obtener por ID
 const obtenerArticuloPorId = async (req, res) => {
   try {
     const articulo = await Articulo.findById(req.params.id);
-    if (!articulo) {
-      return res.status(404).json({ mensaje: 'Artículo no encontrado' });
-    }
+    if (!articulo)
+      return res.status(404).json({ mensaje: "Artículo no encontrado" });
     res.json(articulo);
   } catch (error) {
     res.status(500).json({ mensaje: error.message });
   }
 };
 
-// Actualizar artículo
+// Actualizar
 const actualizarArticulo = async (req, res) => {
   try {
-    const articulo = await Articulo.findByIdAndUpdate(req.params.id, req.body, { new: true });
-    if (!articulo) {
-      return res.status(404).json({ mensaje: 'Artículo no encontrado' });
+    const data = {
+      codigo: req.body.codigo,
+      nombre: req.body.nombre,
+      descripcion: req.body.descripcion,
+      cantidad: req.body.cantidad,
+      precio: req.body.precio,
+    };
+
+    // Si hay nueva foto
+    if (req.file) {
+      data.foto = `/uploads/${req.file.filename}`;
     }
+
+    const articulo = await Articulo.findByIdAndUpdate(req.params.id, data, {
+      new: true,
+    });
+    if (!articulo)
+      return res.status(404).json({ mensaje: "Artículo no encontrado" });
+
     res.json(articulo);
   } catch (error) {
     res.status(400).json({ mensaje: error.message });
   }
 };
 
-// Eliminar artículo
+// Eliminar
 const eliminarArticulo = async (req, res) => {
   try {
     const articulo = await Articulo.findByIdAndDelete(req.params.id);
-    if (!articulo) {
-      return res.status(404).json({ mensaje: 'Artículo no encontrado' });
-    }
-    res.json({ mensaje: 'Artículo eliminado correctamente' });
+    if (!articulo)
+      return res.status(404).json({ mensaje: "Artículo no encontrado" });
+    res.json({ mensaje: "Artículo eliminado correctamente" });
   } catch (error) {
     res.status(500).json({ mensaje: error.message });
   }
@@ -65,5 +86,5 @@ module.exports = {
   obtenerArticulos,
   obtenerArticuloPorId,
   actualizarArticulo,
-  eliminarArticulo
+  eliminarArticulo,
 };

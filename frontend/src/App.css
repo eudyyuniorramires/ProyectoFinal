@@ -1,42 +1,167 @@
-#root {
-  max-width: 1280px;
-  margin: 0 auto;
+/* ===== Reset básico y tipografía ===== */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
+  line-height: 1.5;
+  background-color: #242424; /* fondo oscuro neutro */
+  color: #ffffff;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   padding: 2rem;
+}
+
+/* ===== Contenedor principal ===== */
+.App {
+  max-width: 1200px;
+  width: 100%;
   text-align: center;
 }
 
-.logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-  transition: filter 300ms;
-}
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
-}
-.logo.react:hover {
-  filter: drop-shadow(0 0 2em #61dafbaa);
+/* ===== Título ===== */
+h1 {
+  font-size: 2.5rem;
+  margin-bottom: 2rem;
+  text-shadow: 1px 1px 2px rgba(0,0,0,0.3);
 }
 
-@keyframes logo-spin {
-  from {
-    transform: rotate(0deg);
+/* ===== Botones ===== */
+button {
+  padding: 0.75rem 1.5rem;
+  font-size: 1rem;
+  font-weight: 500;
+  color: #fff;
+  background-color: #007bff;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+  margin: 0.5rem;
+}
+
+button:hover {
+  background-color: #0056b3;
+  transform: scale(1.05);
+}
+
+/* ===== Tabla de artículos ===== */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 2rem auto;
+  background-color: #1a1a1a;
+  color: #fff;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+}
+
+thead {
+  background-color: #007bff;
+  color: #fff;
+}
+
+th, td {
+  padding: 1rem;
+  text-align: left;
+  border-bottom: 1px solid #333;
+}
+
+tbody tr:nth-child(even) {
+  background-color: #2a2a2a;
+}
+
+tbody tr:hover {
+  background-color: #3a3a3a;
+}
+
+/* Fotos en la tabla */
+.tabla-foto {
+  width: 100px;
+  height: 100px;
+  object-fit: cover;
+  border-radius: 6px;
+  border: 2px solid #555;
+  transition: transform 0.3s ease;
+}
+
+.tabla-foto:hover {
+  transform: scale(1.1);
+}
+
+/* ===== Formulario ===== */
+.formulario-container {
+  width: 100%;
+  max-width: 600px;
+  margin: 2rem auto;
+  padding: 2rem;
+  background-color: #1a1a1a;
+  border-radius: 8px;
+  text-align: left;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+}
+
+.formulario-container h2 {
+  text-align: center;
+  margin-bottom: 1.5rem;
+}
+
+.formulario-container label {
+  display: block;
+  margin-bottom: 1rem;
+  font-weight: 500;
+}
+
+.formulario-container input {
+  width: 100%;
+  padding: 0.75rem;
+  margin-top: 0.5rem;
+  border: 1px solid #555;
+  border-radius: 6px;
+  background-color: #2a2a2a;
+  color: #fff;
+}
+
+.formulario-container input[type="file"] {
+  padding: 0.3rem;
+}
+
+.botones-formulario {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 2rem;
+}
+
+.botones-formulario button[type="submit"] {
+  background-color: #28a745;
+}
+
+.botones-formulario button[type="button"] {
+  background-color: #dc3545;
+}
+
+.mensaje {
+  margin-top: 1rem;
+  text-align: center;
+  color: #17a2b8;
+}
+
+/* ===== Responsivo ===== */
+@media (max-width: 768px) {
+  th, td {
+    font-size: 0.9rem;
   }
-  to {
-    transform: rotate(360deg);
+
+  .tabla-foto {
+    width: 75px;
+    height: 75px;
   }
-}
 
-@media (prefers-reduced-motion: no-preference) {
-  a:nth-of-type(2) .logo {
-    animation: logo-spin infinite 20s linear;
+  .formulario-container {
+    padding: 1rem;
   }
-}
-
-.card {
-  padding: 2em;
-}
-
-.read-the-docs {
-  color: #888;
 }

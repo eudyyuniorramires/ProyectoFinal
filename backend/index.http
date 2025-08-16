@@ -9,7 +9,7 @@ POST http://localhost:5000/api/articulos
 Content-Type: application/json
 
 {
-  "codigo": "A002",
+  "codigo": "A004",
   "nombre": "Teclado mecánico",
   "foto": "https://ejemplo.com/teclado.jpg",
   "descripcion": "Teclado mecánico RGB retroiluminado",
