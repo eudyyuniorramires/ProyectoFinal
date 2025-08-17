@@ -1,9 +1,9 @@
 import React from "react";
 import { BACKEND_URL } from "../services/ArticulosService";
 
-function ArticulosTabla({ articulos }) {
+function ArticulosTabla({ articulos, onEditar, onBorrar }) {
   return (
-    <table>
+    <table className="tabla-articulos">
       <thead>
         <tr>
           <th>Foto</th>
@@ -12,6 +12,7 @@ function ArticulosTabla({ articulos }) {
           <th>Descripción</th>
           <th>Cantidad</th>
           <th>Precio</th>
+          <th>Acciones</th>
         </tr>
       </thead>
       <tbody>
@@ -29,6 +30,10 @@ function ArticulosTabla({ articulos }) {
             <td>{articulo.descripcion}</td>
             <td>{articulo.cantidad}</td>
             <td>{articulo.precio}</td>
+            <td>
+              <button onClick={() => onEditar(articulo)}>Editar</button>
+              <button onClick={() => onBorrar(articulo._id)}>Borrar</button>
+            </td>
           </tr>
         ))}
       </tbody>

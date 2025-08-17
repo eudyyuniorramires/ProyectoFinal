@@ -1,7 +1,7 @@
-import React, { useState } from "react";
-import { addArticulo } from "../services/ArticulosService";
+import React, { useState, useEffect } from "react";
+import { addArticulo, updateArticulo } from "../services/ArticulosService";
 
-function ArticuloFormulario({ onArticuloAgregado, onCancelar }) {
+function ArticuloFormulario({ articulo, onArticuloAgregado, onCancelar }) {
   const [nuevoArticulo, setNuevoArticulo] = useState({
     codigo: "",
     nombre: "",
@@ -11,6 +11,29 @@ function ArticuloFormulario({ onArticuloAgregado, onCancelar }) {
   });
   const [fotoFile, setFotoFile] = useState(null);
   const [mensaje, setMensaje] = useState("");
+
+  // Poblar campos si es edicion
+  useEffect(() => {
+    if (articulo) {
+      setNuevoArticulo({
+        codigo: articulo.codigo || "",
+        nombre: articulo.nombre || "",
+        descripcion: articulo.descripcion || "",
+        cantidad: articulo.cantidad || "",
+        precio: articulo.precio || "",
+      });
+      setFotoFile(null);
+    } else {
+      setNuevoArticulo({
+        codigo: "",
+        nombre: "",
+        descripcion: "",
+        cantidad: "",
+        precio: "",
+      });
+      setFotoFile(null);
+    }
+  }, [articulo]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -23,7 +46,7 @@ function ArticuloFormulario({ onArticuloAgregado, onCancelar }) {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setMensaje("Agregando artículo...");
+    setMensaje(articulo ? "Actualizando artículo..." : "Agregando artículo...");
 
     const formData = new FormData();
     Object.entries(nuevoArticulo).forEach(([key, value]) => {
@@ -32,8 +55,13 @@ function ArticuloFormulario({ onArticuloAgregado, onCancelar }) {
     if (fotoFile) formData.append("foto", fotoFile);
 
     try {
-      await addArticulo(formData);
-      setMensaje("Artículo agregado con éxito.");
+      if (articulo && articulo._id) {
+        await updateArticulo(articulo._id, formData);
+        setMensaje("Artículo actualizado con éxito.");
+      } else {
+        await addArticulo(formData);
+        setMensaje("Artículo agregado con éxito.");
+      }
       setNuevoArticulo({
         codigo: "",
         nombre: "",
@@ -50,7 +78,7 @@ function ArticuloFormulario({ onArticuloAgregado, onCancelar }) {
 
   return (
     <div className="formulario-container">
-      <h2>Agregar Nuevo Artículo</h2>
+      <h2>{articulo ? "Editar Artículo" : "Agregar Nuevo Artículo"}</h2>
       <form onSubmit={handleSubmit}>
         <label>
           Código:
@@ -75,6 +103,12 @@ function ArticuloFormulario({ onArticuloAgregado, onCancelar }) {
         <label>
           Foto:
           <input type="file" name="foto" onChange={handleFileChange} />
+          {articulo && articulo.foto && (
+            <div>
+              <img src={articulo.foto} alt="foto actual" width={60} />
+              <span>Foto actual</span>
+            </div>
+          )}
         </label>
         <label>
           Descripción:
@@ -107,7 +141,7 @@ function ArticuloFormulario({ onArticuloAgregado, onCancelar }) {
           />
         </label>
         <div className="botones-formulario">
-          <button type="submit">Agregar</button>
+          <button type="submit">{articulo ? "Actualizar" : "Agregar"}</button>
           <button type="button" onClick={onCancelar}>
             Cancelar
           </button>

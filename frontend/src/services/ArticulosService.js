@@ -33,4 +33,47 @@ export const addArticulo = async (formData) => {
   }
 };
 
+export const borrarArticulo = async (id) => {
+  try {
+    const response = await fetch(`${BACKEND_URL}/api/articulos/${id}`, {
+      method: "DELETE",
+    });
+    if (!response.ok) {
+      throw new Error("Error al borrar el articulo.");
+    }
+    return await response.json();
+  } catch (error) {
+    throw error;
+  }
+};
+
+export const getArticuloById = async (id) => {
+  try {
+    const response = await fetch(`${BACKEND_URL}/api/articulos/${id}`);
+    if (!response.ok) {
+      throw new Error("No se pudo obtener el artículo.");
+    }
+    return await response.json();
+  } catch (error) {
+    throw error;
+  }
+};
+
+export const updateArticulo = async (id, formData) => {
+  try {
+    const response = await fetch(`${BACKEND_URL}/api/articulos/${id}`, {
+      method: "PUT",
+      body: formData,
+    });
+    if (!response.ok) {
+      throw new Error("Error al actualizar el artículo.");
+    }
+    return await response.json();
+  } catch (error) {
+    throw error;
+  }
+};
+
 export { BACKEND_URL };
+
+
